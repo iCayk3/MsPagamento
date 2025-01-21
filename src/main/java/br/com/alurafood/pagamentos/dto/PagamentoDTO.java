@@ -27,8 +27,6 @@ public record PagamentoDTO(
     @NotBlank
     @Size(max = 3, min = 3)
     String codigo,
-    @NotNull
-    @Enumerated(EnumType.STRING)
     Status status,
     @NotNull
     Long pedidoId,

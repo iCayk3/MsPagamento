@@ -21,7 +21,8 @@ public class PagamentoController {
 
     @GetMapping
     public ResponseEntity<Page<PagamentoDTO>> listar(@PageableDefault(size = 10) Pageable paginacao) {
-        return ResponseEntity.ok(service.obterTodos(paginacao));
+        var pagamentos = service.obterTodos(paginacao);
+        return ResponseEntity.ok(pagamentos);
     }
 
     @GetMapping("/{id}")

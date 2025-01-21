@@ -12,10 +12,6 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "pagamentos")
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class Pagamento {
 
@@ -27,6 +23,7 @@ public class Pagamento {
     private String numero;
     private String expiracao;
     private String codigo;
+    @Enumerated(EnumType.STRING)
     private Status status;
     private Long pedidoId;
     private Long formaDePagamentoId;
@@ -41,5 +38,74 @@ public class Pagamento {
         this.status = dados.status();
         this.pedidoId = dados.pedidoId();
         this.formaDePagamentoId = dados.formaDePagamentoId();
+    }
+
+    public Pagamento(){}
+
+    public void atualizarStatus(Status status){
+        this.status = status;
+    }
+    public void atualizarId(Long id){
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public BigDecimal getValor() {
+        return valor;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public String getExpiracao() {
+        return expiracao;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public Long getPedidoId() {
+        return pedidoId;
+    }
+
+    public Long getFormaDePagamentoId() {
+        return formaDePagamentoId;
+    }
+
+    public void atualizarPagamento(PagamentoDTO dto) {
+        if(dto.nome() != null){
+            this.nome = dto.nome();
+        }
+        if(dto.valor() != null){
+            this.valor = dto.valor();
+        }
+        if(dto.numero() != null){
+            this.numero = dto.numero();
+        }
+        if(dto.expiracao() != null){
+            this.expiracao = dto.expiracao();
+        }
+        if(dto.codigo() != null){
+            this.codigo = dto.codigo();
+        }
+        if(dto.pedidoId() != null){
+            this.pedidoId = dto.pedidoId();
+        }
+        if(dto.formaDePagamentoId() != null){
+            this.formaDePagamentoId = dto.formaDePagamentoId();
+        }
     }
 }

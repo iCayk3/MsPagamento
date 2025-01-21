@@ -17,9 +17,7 @@ public class PagamentoService {
     PagamentoRepository repository;
 
     public Page<PagamentoDTO> obterTodos(Pageable paginacao) {
-        return repository
-                .findAll(paginacao)
-                .map(PagamentoDTO::new);
+        return repository.findAll(paginacao).map(PagamentoDTO::new);
     }
 
     public PagamentoDTO obterPorId(Long id) {
@@ -31,18 +29,19 @@ public class PagamentoService {
 
     public PagamentoDTO criarPagamento(PagamentoDTO dto) {
         Pagamento pagamento = new Pagamento(dto);
-        pagamento.setStatus(Status.CRIADO);
+        pagamento.atualizarStatus(Status.CRIADO);
         repository.save(pagamento);
 
         return new PagamentoDTO(pagamento);
     }
 
     public PagamentoDTO atualizarPagamento(Long id, PagamentoDTO dto) {
-        Pagamento pagamento = new Pagamento(dto);
-        pagamento.setId(id);
-        pagamento = repository.save(pagamento);
-
-        return new PagamentoDTO(pagamento);
+        var pagamento = repository.findById(id);
+        if(pagamento.isPresent()){
+            pagamento.get().atualizarPagamento(dto);
+            return new PagamentoDTO(pagamento.get());
+        }
+        throw new RuntimeException("Id não encontrado.");
     }
 
     public void excluirPagamento(Long id) {
